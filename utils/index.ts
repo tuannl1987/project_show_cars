@@ -1,11 +1,12 @@
 import { CarProps, FilterProps } from "@/types";
 
 export async function fetchCars(filters : FilterProps) {
+    
     const { manufacturer, year, model, limit, fuel } = filters;
 
     const headers =  {
-		'X-RapidAPI-Key': 'd5aed76c56msh638ce8d6491f990p1db15ajsnab83a12b10c4',
-		'X-RapidAPI-Host': 'cars-by-api-ninjas.p.rapidapi.com'
+		'X-RapidAPI-Key': '' + process.env.xRapidApiKey,
+		'X-RapidAPI-Host': '' + process.env.xRapidApiHost
 	};
 
     const response = await fetch(`https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?model=${manufacturer}&year=${year}&make=${model}&limit=${limit}&fuel_type=${fuel}`, {
@@ -13,8 +14,6 @@ export async function fetchCars(filters : FilterProps) {
     });
 
     const result = await response.json();
-
-    console.log(result);
 
     return result;
 };
@@ -35,7 +34,7 @@ export const calculateCarRent = (city_mpg: number, year: number) => {
 };
 
 export const generateCarImageUrl = (car: CarProps, angle?: string) => {
-    const url = new URL('https://cdn.imagin.studio/getimage');
+    const url = new URL('' + process.env.studioCarImage);
 
     const { make, year, model } = car;
 
